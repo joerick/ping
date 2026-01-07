@@ -18,7 +18,9 @@ jobs:
       - name: Dump PowerShell (pwsh) Environment
         shell: pwsh
         run: |
-          Get-ChildItem Env: | Sort-Object Name | ForEach-Object { "$($_.Name)=$($_.Value)" }
+          Get-ChildItem Env: | Sort-Object Name | ForEach-Object {
+            [System.Console]::WriteLine("{0}={1}", $_.Name, $_.Value)
+          }
           
       - name: Dump Python Environment
         shell: python
