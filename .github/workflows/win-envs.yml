@@ -1,0 +1,47 @@
+name: Environment Comparison
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  compare-shells:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Dump Bash Environment
+        shell: bash
+        run: env | sort
+
+      - name: Dump PowerShell (pwsh) Environment
+        shell: pwsh
+        run: |
+          Get-ChildItem Env: | Sort-Object Name | ForEach-Object {
+            [System.Console]::WriteLine("{0}={1}", $_.Name, $_.Value)
+          }
+          
+      - name: Dump Python Environment
+        shell: python
+        run: |
+          import os
+          # Print in k=v format to match 'env' output style
+          for k, v in sorted(os.environ.items()):
+              print(f"{k}={v}")
+
+      # --- LINK.EXE RESOLUTION ---
+
+      - name: Resolve link.exe (Bash)
+        shell: bash
+        run: which link
+
+      - name: Resolve link.exe (PowerShell)
+        shell: pwsh
+        run: (Get-Command link).Source
+
+      - name: Resolve link.exe (Python)
+        shell: python
+        run: |
+          import shutil
+          print(shutil.which("link"))
