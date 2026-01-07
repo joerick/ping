@@ -1,0 +1,28 @@
+name: Environment Comparison
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  compare-shells:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Dump Bash Environment
+        shell: bash
+        run: env | sort
+
+      - name: Dump PowerShell (pwsh) Environment
+        shell: pwsh
+        run: Get-ChildItem Env: | Sort-Object Name
+
+      - name: Dump Python Environment
+        shell: python
+        run: |
+          import os
+          # Print in k=v format to match 'env' output style
+          for k, v in sorted(os.environ.items()):
+              print(f"{k}={v}")
