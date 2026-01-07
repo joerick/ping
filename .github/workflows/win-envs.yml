@@ -18,8 +18,8 @@ jobs:
       - name: Dump PowerShell (pwsh) Environment
         shell: pwsh
         run: |
-          Get-ChildItem Env: | Sort-Object Name
-
+          Get-ChildItem Env: | Sort-Object Name | ForEach-Object { "$($_.Name)=$($_.Value)" }
+          
       - name: Dump Python Environment
         shell: python
         run: |
