@@ -29,3 +29,19 @@ jobs:
           # Print in k=v format to match 'env' output style
           for k, v in sorted(os.environ.items()):
               print(f"{k}={v}")
+
+      # --- LINK.EXE RESOLUTION ---
+
+      - name: Resolve link.exe (Bash)
+        shell: bash
+        run: which link.exe
+
+      - name: Resolve link.exe (PowerShell)
+        shell: pwsh
+        run: (Get-Command link.exe).Source
+
+      - name: Resolve link.exe (Python)
+        shell: python
+        run: |
+          import shutil
+          print(shutil.which("link.exe"))
