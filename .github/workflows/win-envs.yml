@@ -17,7 +17,8 @@ jobs:
 
       - name: Dump PowerShell (pwsh) Environment
         shell: pwsh
-        run: Get-ChildItem Env: | Sort-Object Name
+        run: |
+          Get-ChildItem Env: | Sort-Object Name
 
       - name: Dump Python Environment
         shell: python
