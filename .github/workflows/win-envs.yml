@@ -34,14 +34,14 @@ jobs:
 
       - name: Resolve link.exe (Bash)
         shell: bash
-        run: which link.exe
+        run: which link
 
       - name: Resolve link.exe (PowerShell)
         shell: pwsh
-        run: (Get-Command link.exe).Source
+        run: (Get-Command link).Source
 
       - name: Resolve link.exe (Python)
         shell: python
         run: |
           import shutil
-          print(shutil.which("link.exe"))
+          print(shutil.which("link"))
